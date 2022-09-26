@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<!-- CSC 161 Projects Last Updated 8/17/2019 Fall 2019 -->
+<!-- CSC 161 Jeopardy Game updated 5/30/2021 -->
+<!-- Updated 8/19/2021 -->
+<!-- Updated 1/3/2022 -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>CSC 161 Jeopardy Game</title>
+<style>
+/* Updated 8/13/2020 11AM */
+#wrapper {
+    clear: both;
+    width: auto;
+    font-family: Arial;
+    font-stretch: narrower;
+    margin-right: 10px;
+    padding: 10px 20px 0 20px;
+}
+
+#content {
+    clear: both;
+    text-align: left;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: 12px;
+    display: block;
+    padding: 10px 20px 0 20px;
+ 
+
+}
+
+#content footer {
+    margin-right: 10px;
+    padding: 10px 20px 0 20px;
+    font-size: 10px;
+}
+
+#footer {
+    float: left;
+    margin-top: 20px;
+    margin-left: 10px;
+    clear: both;
+}
+
+
+#header {
+    height: 75px;
+    background: #891a1c;
+    vertical-align: middle;
+    font-size: 32px;
+    font-weight: bold;
+    color: #FFFFFF;
+    padding: 40px 20px 0px 20px;
+}
+
+/* Style the navigation bar */
+.navbar {
+    background-color: #891a1c;
+    overflow: auto;
+    padding-left: 10px;
+    padding-bottom: 10px;
+
+}
+/* Navbar links */
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+/* Navbar links on mouse-over */
+.navbar a:hover {
+    background-color: #000;
+
+}
+
+
+/* Add responsiveness - will automatically display the navbar vertically instead of horizontally on screens less than 500 pixels */
+@media screen and (max-width: 500px) {
+    .navbar a {
+        float: none;
+        display: block;
+        
+    }
+}
+/* The dropdown container */
+.dropdown {
+    display: inline-block;
+    overflow: hidden;
+    height: 16px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+/* Dropdown button */
+.dropdown  {
+    font-size: 18px;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
+}
+
+/* Add a red background color to navbar links on hover */
+.dropdown:hover  {
+    background-color: #000;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    height: auto;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 60px;
+    box-shadow 0px 8px 0px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 5px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 12px;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+section{
+    background-color: #FFFF00;
+    font-size: 16px;
+    font-style: italic;
+    border-style: solid;
+    border-color: black;
+}
+
+
+h1{
+    text-align:left;
+    font-weight: normal;
+    font-size:28px;
+    background-color:#000000;
+    color: #FFFFFF;
+    padding: 10px;
+}
+h2{
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align:left;
+    background-color:#D3D3D3;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size:20px;
+}
+
+pre{
+    font-size:5px;
+}
+
+.section004 {
+    display: none;
+}
+.section005 {
+    display: none;
+}
+
+h1 a{
+    color: #778899;
+}
+h3{
+    vertical-align: inherit;
+    font-weight: bold;
+    align-content:center;
+    background-color:#E6E6E6;
+    padding-left: 36px;
+    font-size:14px;
+}
+caption {
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: left;
+    background-color: #D3D3D3;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
+}
+table {
+    border: solid;
+    font-family: Arial;
+    font-stretch: narrower;
+}
+
+th {
+    vertical-align: top;
+    border: solid;
+    text-align: left;
+    font-weight: normal;
+    font-size: 28px;
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 10px;
+}
+
+td {
+    border: solid;
+    vertical-align: top;
+    text-align: left;
+    font-weight: normal;
+    font-size: 18px;
+    padding: 10px;
+}
+
+td ul {
+    margin-top: 0px;
+    padding-left: 1.2em;
+}
+
+  
+</style>
+
+
+<script type="text/javascript">
+// From: http://www.webdeveloper.com/forum/showthread.php?266743-Switch-Div-Content-Using-Javascript&p=1229155#post1229155
+
+function showDiv(idInfo) {
+var sel = document.getElementById('content').getElementsByTagName('div');
+for (var i = 0; i < sel.length; i++)
+  sel[i].style.display = 'none';
+document.getElementById(idInfo).style.display = 'block';
+}
+
+function showChildDiv(idInfo) {
+if (document.getElementById(idInfo).style.display == 'none')
+  document.getElementById(idInfo).style.display = 'block';
+else
+  document.getElementById(idInfo).style.display = 'none';
+}
+
+/**/</script>
+
+
+
+
+
+</head>
+
+<body>
+<a name="TOP"></a>
+
+<a name="TOP"></a>
+<div id="wrapper">
+
+<!-- the header and navigation -->
+<div id="header">
+&#128198; CSC 161 Jeopardy Game
+</div>
+<div class="navbar">
+<span><a href="../syllabus.htm#SUBMISSION_REQUIREMENTS" target="_blank">Submission_Info</a></span>
+
+<div class="dropdown">
+  <span><a href="#" onclick="showDiv('JEOPARDY1');return false">Project_1&#9660;</a></span>
+  <div class="dropdown-content">
+      <a href="#QUESTION_CSV" onclick="showDiv('JEOPARDY1');return true">&#9658 Question.csv</a>
+      <a href="#PLAYER_CLASS" onclick="showDiv('JEOPARDY1');return true">&#9658 Player Class</a>
+      <a href="#CONTESTANTS_CLASS" onclick="showDiv('JEOPARDY1');return true">&#9658 Contestants Class</a>
+      <a href="#JEOPARDY_MAIN1" onclick="showDiv('JEOPARDY1');return true">&#9658 Jeapardy 1 (main)</a>
+  </div>
+</div>
+
+<div class="dropdown">
+  <span><a href="#" onclick="showDiv('JEOPARDY2');return false">Project_2&#9660;</a></span>
+  <div class="dropdown-content">
+      <a href="#RECORD" onclick="showDiv('JEOPARDY2');return true">&#9658 Record Class</a>
+      <a href="#LINKLIST" onclick="showDiv('JEOPARDY2');return true">&#9658 LinkList Class</a>
+      <a href="#JEOPARDY_MAIN2" onclick="showDiv('JEOPARDY2');return true">&#9658 Jeapardy 2 (main)</a>
+  </div>
+</div>
+    
+
+<div class="dropdown">
+  <span><a href="#" onclick="showDiv('JEOPARDY3');return false">Project_3&#9660;</a></span>
+  <div class="dropdown-content">
+      <a href="#BINTREE" onclick="showDiv('JEOPARDY3');return true">&#9658 BinTree Class</a>
+      <a href="#JEOPARDY_MAIN3" onclick="showDiv('JEOPARDY3');return true">&#9658 Jeapardy 3 (main)</a>
+  </div>
+</div>
+
+
+
+
+</div> <!-- end navbar div -->
+<!-- the content -->
+<div id="content">
+
+<div id="JEOPARDY1">
+
+  <h1 id="QUESTION_CSV">Project #1 Part 1 | "Category".csv</h1>
+
+  <h2>Assignment Specification:</h2>
+  <h3>Student Generated Category Question Set</h3>
+  <ol type="1">
+      <li>
+          Each student must create a category question set
+          between 8 to 20 questions for our Backwards Jeopardy game
+          <ul>
+              <li>
+                  Our program will ask the questions and the
+                  contestant will answer with the answers
+              </li>
+              <li>
+                  This is
+                  backwards from how the TV show does it where the
+                  answers are given and the contestants answers with
+                  the question in the form of a question
+              </li>
+          </ul>
+      </li>
+
+      <li>
+          Each question must:
+          <ul>
+              <li>tie to the same category</li>
+              <li>be appropriate for a college course</li>
+              <li>result in a single word <b>ONLY</b> answer</li>
+              <li>
+                  <b>CANNOT</b> contain a , (comma) in any part of the
+                  category,
+                  question or answer as the comma is used to delimit the data
+                  Record for each Record
+              </li>
+              <li>
+                  assign a score value to each question 100-2000 in
+                  increments of 100, where question difficulty is based upon
+                  the score
+              </li>
+          </ul>
+      </li>
+      <li>
+          A comma separated file (CSV) named <i>"YourCategory.csv"</i>,
+          where "YourCategory" is the name of the category set,
+          and formatted as: <i>Category,Question,Answer,Score</i>
+      </li>
+  </ol>
+  <ul>
+      <li>The example below would be saved to a file named <i>tennis.csv</i></li>
+  </ul>
+  <pre>
+  Tennis,How do you represent a score of 0?,Love,100
+  Tennis,What is a tennis serve called that hits the net and continues into the correct service box?,let,200
+  </pre>
+
+  <ul>
+      <li>
+          Hint: open the .csv file in Excel and if formatted correctly, you'll see 4 columns of data in columns: A,B,C,D.
+          If any data is found in any other columns then you may have included a comma on accident in the question or answer.
+          <ul>
+              <li>Commas cannot be part of any of the data itself as it is the delimiter separating the data!</li>
+          </ul>
+      </li>
+  </ul>
+
+  <h2>How to Submit:</h2>
+
+  <ol type="1">
+      <li>Name the file <b><i>YourCategory</i>.csv</b> - where "YourCategory" is the name of the category set.</li>
+      <li>Upload and submit to the Category.csv to the D2L Assignment Dropbox.</li>
+  </ol>
+  <p><a href="#TOP">Back to Top</a></p>
+
+
+  <h1 id="PLAYER_CLASS">Project #1 Part 2 | Player Class</h1>
+
+  <h2>Objectives: <a href="#OBJECTIVES1_2" onclick="showChildDiv('OBJECTIVES1_2');return true">(Show/Hide)</a></h2>
+  <div id="OBJECTIVES1_2" style="display: none;">
+      <ul>
+          <li>Design and develop large-scale programs using classes and data structures.</li>
+          <li>Write properly documented programs following a set of coding standards.</li>
+          <li>Demonstrate an understanding of object-oriented methodology in program design.</li>
+          <li>Create classes to be used as an abstract data type for a program.</li>
+          <li>Demonstrate understanding and use of the process of data abstraction/encapsulation.</li>
+      </ul>
+  </div>
+
+  <h2>Assignment Specificiations:</h2>
+
+  <h3>Player Class</h3>
+  <ol type="1">
+      <li>
+          A single player object has a:
+          <ul>
+              <li>name (single one word name) as a string</li>
+              <li>score as an integer</li>
+          </ul>
+      </li>
+      <li>Include macro guard defined as PLAYER_H</li>
+      <li>
+          Class must be divided into declaration <i>Player.h</i>
+          and definition <i>Player.cpp</i> files
+      </li>
+      <li>
+          Declaration file: Player.h  - should be developed with data
+          encapsulation in mind (private data members and public member functions)
+      </li>
+      <li>
+          Definition file: Player.cpp - should be developed focusing on
+          4 parts:
+          <ol type="1">
+              <li>constructors</li>
+              <li>accessor (getters) member functions</li>
+              <li>modifiers (setters) member functions</li>
+              <li>
+                  other member functions:
+                  <ul>
+                      <li>
+                          std::string toString(); // REQUIRED
+                          <ul>
+                              <li>returns a string formatting the info of the object to display to the user</li>
+                              <li>it does <b>NOT</b> get input from the user - NO std::cin or std::cout</li>
+                              <li>this is a constant function that formats the data to display to the user</li>
+                          </ul>
+                      </li>
+                      <li>
+                          std::string toFileString(); // REQUIRED
+                          <ul>
+                              <li>returns a string formatted as a comma delimited Record (ie. name,score\n)</li>
+                              <li>it does <b>NOT</b> read from the file - NO std::ifstream or std::ofstream</li>
+                              <li>this is a constant function that formats the data to display in a file</li>
+                          </ul>
+                      </li>
+                      <li>...</li>
+                  </ul>
+          </ol>
+      </li>
+      <li>
+          Operator Overloads
+          <ol type="a">
+              <li>
+                  All 6 relational operators (==, !=, &gt;, &gt;=, &lt;, &lt;=) required to be
+                  overloaded
+                  <ul>
+                      <li>A Player is compared to another Player based upon the scores of the Players.</li>
+                      <li>Players are <b>NOT</b> compared considering their names!</li>
+                  </ul>
+              </li>
+              <li>
+                  &gt;&gt; for both istream and ifstream required to be overloaded
+                  <ul>
+                      <li>istream reads from the user input as name and score (include prompts)</li>
+                      <li>
+                          ifstream reads from a comma delimited file as name,score\n
+                          <ul>
+                              <li>Hint: use std::getline from std::string that reads until a delimiter</li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
+              <li>
+                  &lt;&lt; for both ostream and ofstream required to be overloaded
+                  <ul>
+                      <li>ostream should call toString() member function</li>
+                      <li>ofstream should call toFileString() member function</li>
+                      <li>
+                          <b>Question:</b> ofstream& operator &lt;&lt;(ofstrea& ofs, const Player& p) -
+                          indicates no match for overloaded function
+                          <br /><b>Answer:</b> Write an empty string first: ofs &lt;&lt; <b>""</b> &lt;&lt; p.name ...
+                      </li>
+                  </ul>
+              </li>
+          </ol>
+      </li>
+  </ol>
+
+  <ul>
+      <li>Although NO main file is being submitted at this time, each function written should be thoroughly tested.</li>
+      <li>
+          For testing purposes, write your own main and call each function in Player to perform a unit test to validate
+          your class.
+      </li>
+  </ul>
+
+  <p><a href="#TOP">Back to Top</a></p>
+
+
+  <h1 id="CONTESTANTS_CLASS">Project #1 Part 3 | Contestants Class</h1>
+  <h2>Objectives: <a href="#OBJECTIVES1_3" onclick="showChildDiv('OBJECTIVES1_3');return true">(Show/Hide)</a></h2>
+  <div id="OBJECTIVES1_3" style="display: none;">
+      <ul>
+          <li>Design and develop large-scale programs using classes and data structures.</li>
+          <li>Write properly documented programs following a set of coding standards.</li>
+          <li>Demonstrate an understanding of object-oriented methodology in program design.</li>
+          <li>Create classes to be used as an abstract data type for a program.</li>
+          <li>Demonstrate understanding and use of the process of data abstraction/encapsulation.</li>
+          <li>Implement contiguous data structures in code.</li>
+      </ul>
+  </div>
+      <h2>Assignment Specificiations:</h2>
+      <h3>Contestants Class</h3>
+      <ol>
+          <li>
+              Contestants is an <strong>unordered list</strong> (Bag) data structure that <i>has an</i> underlying fixed size array of
+              three <strong>Player</strong> objects
+
+              <ul>
+                  <li>Constant: MAX_SIZE</li>
+                  <li>Player data[MAX_SIZE]</li>
+                  <li>int size;</li>
+              </ul>
+          </li>
+          <li>
+              The Contestants data structure should include collection functionality:<br>
+              <ol>
+                  <li>Default constructor that creates an empty list</li>
+                  <li>getSize - returns the number of elements in the array</li>
+                  <li>getMaxSize - returns the fixed-size of the array</li>
+                  <li>append into collection at the end - keeping data structure unordered</li>
+                  <li>
+                      remove or erase from the collection by the Player object
+                      <ul>
+                          <li>Unordered removal: Player is found and then the last object is replaced over the object found</li>
+                      </ul>
+                  </li>
+                  <li>
+                      remove or erase from the collection by index
+                      <ul>
+                          <li>Unordered removal: last index used is replaced over index to remove or erase</li>
+                      </ul>
+                  </li>
+                  <li>clearAll - BigO(1) for constant efficiency - reset size to 0!</li>
+                  <li>
+                      find or contains a Player object and return the index
+                      <ul>
+                          <li>Validate index required</li>
+                      </ul>
+                  </li>
+                  <li>
+                      at or getItembyIndex and return the Player object
+                      <ul>
+                          <li>Validate index required</li>
+                      </ul>
+                  </li>
+                  <li>
+                      readfile
+                      <ul>
+                          <li>Create std::ifstream object, open file, check file opened successfully</li>
+                          <li>Read from file into temporary Player object until <i>eof</i> and <i>append</i> Player</li>
+                          <li>Close file</li>
+                      </ul>
+                  </li>
+                  <li>
+                      writefile
+                      <ul>
+                          <li>Create std::ofstream object, open file, check file opened successfully</li>
+                          <li>Loop through all items and write to file</li>
+                          <li>Close file</li>
+                      </ul>
+                  </li>
+              </ol>
+          </li>
+          <li>[]subscript operator as a getter needs to be overloaded. This means it should only get or access and return an item from the array - NOT modify or set the item: Player operator[](int index)</li>
+          <li>Include macro guard defined as CONTESTANTS_H</li>
+          <li>Class must be divided into declaration .h and definition .cpp files</li>
+      </ol>
+
+      <ul>
+          <li>Each function written should be thoroughly tested.</li>
+          <li>
+              For testing purposes, write your own main and call each function in Contestants to perform a unit test to validate
+              your class.
+          </li>
+      </ul>
+
+      <p><a href="#TOP">Back to Top</a></p>
+
+      <h1 id="JEOPARDY_MAIN1">Project #1 Part 4 | Jeopardy 1 (main)</h1>
+      <h2>Objectives: <a href="#OBJECTIVES1_4" 
+          onclick="showChildDiv('OBJECTIVES1_4');return true">(Show/Hide)</a></h2>
+      <div id="OBJECTIVES1_4" style="display: none;">
+          <ul>
+              <li>Design and develop large-scale programs using classes and data structures.</li>
+              <li>Write properly documented programs following a set of coding standards.</li>
+              <li>Demonstrate an understanding of object-oriented methodology in program design.</li>
+              <li>Create classes to be used as an abstract data type for a program.</li>
+              <li>Demonstrate understanding and use of the process of data abstraction/encapsulation.</li>
+          </ul>
+      </div>
+
+          <h2>Assignment Specificiations:</h2>
+
+          <h3 id="DOWNLOAD1">Download Data File to include in the project as the data resource file:</h3>
+          <ul>
+              <li>
+                  <a href="jeopardy_main1.cpp" target="_blank">
+                      jeopardy_main1.cpp
+                  </a>
+              </li>
+              <li>
+                  <a href="player.dat" target="_blank">player.dat</a>
+              </li>
+          </ul>
+
+          <h3>Jeopardy_main1</h3>
+          <ol>
+              <li>
+                  Create a C++ project named <strong>Jeopardy_main1</strong> and include the main source file
+                  (<a href="#DOWNLOAD1">download above</a>)
+              </li>
+              <li>
+                  Copy and both Player and Contestants classes to the project folder, ensuring all files are saved locally
+                  to the project.
+              </li>
+              <li>Add the class files as existing items to the project.</li>
+              <li>
+                  The main program (Jeopardy_main1.cpp) will:
+                  <ol>
+                      <li>Setup the Contestants object - it should be empty with a CAPACITY of 3</li>
+                      <li>
+                          Read from the player.dat file (<a href="#DOWNLOAD1">download above</a>)</a>
+                          into the Contestants collection bag for the "Greatest of all Time" Jeopardy players.
+                          <ul>
+                              <li>Contestants::readFile</li>
+                          </ul>
+                      </li>
+                      <li>Print the Contestant collection bag to the console formatted in a meaningful way for the user experience.</li>
+                      <li>Remove all 3 "Greatest of all Time" Jeopardy players</li>
+                      <li>Ask the 3 new contestants to be introduced</li>
+                      <li>
+                          Create player objects from the given names and scores and add the 3 players to the Contestant collection.
+                          <ol>
+                              <li>
+                                  Print the entire Contestants collection to the console and format for the Console in meaningful way
+                                  for the user experience
+                              </li>
+                          </ol>
+                      </li>
+                      <li>
+                          Write the entire Contestants collection to the file player.dat file.
+                          <ul>
+                              Contestants::writeFile
+                          </ul>
+                      </li>
+                  </ol>
+              </li>
+              <li>Make sure to use the classes (Contestants and Player) with their member functions and operators.</li>
+          </ol>
+
+
+          <h2>How to Submit:</h2>
+          <ul>
+              <li>
+                  Make sure to follow the <a href="../rubric.htm" target="_blank">Grading Rubric</a>
+                  and <a href="../syllabus.htm#ACADEMIC_STANDARDS" target="_blank">Academic Standards</a>.
+              </li>
+          </ul>
+          <ul>
+              <li>Complete and Submit to replit project: Jeopardy #1
+                  <ol type="1">
+                      <li>contestants.h</li>
+                      <li>contestants.cpp</li>
+                      <li>jeopardy_main1.cpp (main)</li>
+                      <li>player.h</li>
+                      <li>player.cpp</li>
+                  </ol>
+
+              </li>
+             
+
+          </ul>
+
+          <p><a href="#TOP">Back to Top</a></p>
+
+      </div> <!-- end of Project #1 div -->
+
+
+<div id="JEOPARDY2">
+  <h1 id="RECORD">Project #2 Part 1 | Record Class</h1>
+  <h2>
+      Objectives: <a href="#OBJECTIVES2_1"
+                     onclick="showChildDiv('OBJECTIVES2_1');return true">(Show/Hide)</a>
+  </h2>
+  <div id="OBJECTIVES2_1" style="display: none;">
+      <ul>
+          <li>Recognize situations in which inheritance can simplify the implementation of a group of related classes</li>
+          <li>Implement a derived class</li>
+          <li>Recognize situations in which creating an abstract base class will allow the later implementation of many derived classes that share underlying functions.</li>
+          <li>
+              Process memory allocation and management of contiguous data structures in code.
+          </li>
+      </ul>
+  </div>
+  <h2>Assignment Specificiations:</h2>
+  <h3>Record Class</h3>
+  <ol>
+      <li>
+          Create the <strong>Record</strong> class that inherits from std::string.
+          <ul>
+              <li>Record "is a" std::string</li>
+              <li>All public member functions, operators are inherited from std::string in Record</li>
+              <li>
+                  Although Record cannot access std::string private data member, there are public functions
+                  and operators: c_str, data, [], at, that allow Record access to the data
+              </li>
+          </ul>
+      </li>
+
+      <li>
+          Write constructors in the Record class (that map to <a href="http://cplusplus.com/reference/string/string/string/" target="_blank">std::string constructors</a>), make sure to call the base class constructor and set splitData to nullptr
+          <ol>
+              <li>default (1) | Record() : std::string()</li>
+              <li>copy (2) | Record(const std::string& str) : std::string(str)</li>
+              <li>substring (3) | Record(const std::string& str, size_t pos, size_t len=npos) : std::string(str, pos, len)</li>
+              <li>from c-string (4) | Record(const char* s) : std::string(s)</li>
+              <li>from sequence (5) | Record(const char* s, size_t n) : std::string(s, n)</li>
+              <li>fill (6) | Record(size_t n, char c) : std::string(n, c)</li>
+          </ol>
+      </li>
+      <li>
+          Add member functions: upper and lower member functions to convert the Record object
+          to all uppercase or all lowercase, returning the new Record: Record Record::upper();
+          <ul>
+              <li>
+                  Investigate Python's upper and lower methods to determine structure of the member function and model
+                  Record::upper and Record::lower in the same manner
+                  <ul>
+                      <li><a rel="noopener" href="https://www.w3schools.com/python/ref_string_upper.asp">https://www.w3schools.com/python/ref_string_upper.asp</a></li>
+                      <li><a rel="noopener" href="https://www.w3schools.com/python/ref_string_lower.asp">https://www.w3schools.com/python/ref_string_lower.asp</a></li>
+                  </ul>
+              </li>
+          </ul>
+      </li>
+      <li>
+          Add member function: int compareIgnoreCase(const Record&amp; record); in which the function returns 0 if equal,
+          -1 if the first is less than the second and 1 if the first is greater than the second
+          (this function is similiar to std::string::compare(const string&amp; str); member function of string, but is not case sensitive
+          as the std::string::compare is case-sensitive.
+          <ul>
+              <li>
+                  Investigate C++ std::string::compare member function
+                  <ul>
+                      <li><a rel="noopener" href="http://www.cplusplus.com/reference/string/string/compare/">http://www.cplusplus.com/reference/string/string/compare/</a></li>
+                  </ul>
+              </li>
+              <li>The member function uses the *this as the first object and the 2nd object is passed into the function</li>
+              <li>Create a temporary object locally that is assigned *this and convert to upper case</li>
+              <li>Create a temporary object locally that is assigned to the argument and convert to upper case</li>
+              <li>Call the std::string::compare on the 2 temporary objects and return the result</li>
+          </ul>
+      </li>
+      <li>
+          Overload &gt;&gt; for std::istream: std::istream reads until the '\n'
+      </li>
+      <li>Overload &gt;&gt; for std::ifstream: std::ifstream read until the '\n'</li>
+      <li>
+          Add member function: Record* split(char delimiter); - this function creates a dynamic array of Record 
+          objects
+          based upon the delimiter and populates the array by splitting the Record
+          <ul>
+              <li>
+                  Investigate Python's split method to determine structure of the member function and task
+                  <ul>
+                      <li><a rel="noopener" href="https://www.w3schools.com/python/ref_string_split.asp">https://www.w3schools.com/python/ref_string_split.asp</a></li>
+                  </ul>
+              </li>
+              <li>
+                  The split function cannot deallocate the memory; therefore, make a destructor and have the 
+                  destructor
+                  deallocate the memory. The pointer should be a private data member for Record class 
+                  that is set by the
+                  constructors to nullptr and deallocated in the destructor. The split member function allocates
+                  the memory, sets the data in the array and returns the pointer out.
+
+              </li>
+          </ul>
+      </li>
+      <li>
+          Add private data members to assist with the split member function
+          <ul>
+              <li>Record* fields;</li>
+              <li>int size, max;</li>
+          </ul>
+      </li>
+      <li>
+          Add public member function to assist with the split member function
+          <ul>
+              <li>int getNumFieldsInRecord() const { return size; } // returns number of fields after split</li>
+          </ul>
+      </li>
+      <li>Update all constructors to initialize the new private data members to default values</li>
+      <li>
+          Implement the destructor to deallocate memory allocated from split - delete [] fields;
+          <ul>
+              <li>Destructor Prototype: ~Record();</li>
+              <li>Destructor Definition: Record::~Record() {...}</li>
+          </ul>
+      </li>
+  </ol>
+
+  <p><a href="#TOP">Back to Top</a></p>
+
+
+  <h1 id="LINKLIST">Project #2 Part 2 | LinkList Class</h1>
+  <h2>
+      Objectives: <a href="#OBJECTIVES2_2"
+                     onclick="showChildDiv('OBJECTIVES2_2');return true">(Show/Hide)</a>
+  </h2>
+  <div id="OBJECTIVES2_2" style="display: none;">
+      <ul>
+
+          <li>Design and develop large-scale programs using classes and data structures.</li>
+          <li>
+              Write properly documented programs following a set of coding standards.
+          </li>
+          <li>Construct programs to utilize class templates/generics.</li>
+          <li>Implement non-contiguous data structures in code.</li>
+          <li>
+              Process memory allocation and management of non-contiguous data structures in code.
+          </li>
+      </ul>
+  </div>
+
+  <h2>Assignment Specificiations:</h2>
+
+  <h3>Node&lt;T&gt; Template Class (Node.h and Node.template)</h3>
+  <ol>
+      <li>
+          A Node has <strong>public</strong> data member:
+          <ul>
+              <li>Node&lt;T&gt;* next (link to next Node)</li>
+              <li>T data (data item or element being stored)</li>
+          </ul>
+      </li>
+      <li>Declare and define a Node default constructor</li>
+      <li>Declare and define a Node constructor that takes the dataIn as the parameter</li>
+      <li>Update Node.h and Node.cpp to a template class and rename Node.cpp as Node.template</li>
+  </ol>
+
+  <h3>LinkList&lt;T&gt; Template Class (LinkList.h and LinkList.template)</h3>
+  <ol>
+      <li>
+          A LinkList has private data members of
+          <ul>
+              <li>Node&lt;T&gt;* first (head pointer)</li>
+              <li>Node&lt;T&gt;* last (tail pointer)</li>
+          </ul>
+      </li>
+      <li>
+          A LinkList is a dynamic linear one-directional singly data structure that should allow the functionality of:
+          <ol>
+              <li>Constructor empty LinkList with default constructor</li>
+              <li>
+                  getSize() returns the counter of number of elements - BigO(n) - linear
+                  <ul>
+                      <li>There is <b>NO</b> data member for keeping track of the size</li>
+                      <li>The member function traverses and counts the LinkList to obtain this value</li>
+                  </ul>
+              </li>
+              <li>prepend dataItem at the beginning</li>
+              <li>append dataItem at the end</li>
+              <li>isEmpty()</li>
+              <li>remove by dataItem</li>
+              <li>removeFirst</li>
+              <li>clearAll</li>
+
+              <li>
+                  at(int counter) and returns the item at the location
+                  <ul>
+                      <li>Counter is <b>NOT</b> zero-based nor an index, but a counter of number of items starting at 1</li>
+                  </ul>
+              </li>
+              <li>
+                  getRandomItem and return the itemt at a randomly generated location
+              </li>
+
+              <li>findNode by dataItem return pointer to Node - private member function</li>
+              <li>bool readFile(std::string fileName);&nbsp;</li>
+              <li>bool writeFile(std::string fileName);</li>
+              <li>Destructor</li>
+              <li>Copy Constructor</li>
+              <li>Assignment Operator</li>
+          </ol>
+      </li>
+      <li>
+          Convert LinkList to a template class
+          <ul>
+              <li>Update LinkList class (LinkList.h and LinkList.cpp) to a template class and rename LinkList.cpp to LinkList.template</li>
+          </ul>
+      </li>
+  </ol>
+  <h3 id="BONUS">Bonus</h3>
+  <ul>
+      <li>
+          Setup Friend relationship between LinkList and Node (<a rel="noopener" href="http://www.cplusplus.com/doc/tutorial/inheritance/">http://www.cplusplus.com/doc/tutorial/inheritance/</a>)
+          <ul>
+              <li>Change Node to have <strong>private</strong> data members rather than public data members.</li>
+          </ul>
+      </li>
+      <li>
+          LinkList
+          <ul>
+              <li>removeAllDups - leave the first occurrence and remove all remaining duplicates</li>
+              <li>insertInAscOrder - insert dataItem in the correct position, keeping the LinkList in ascending order</li>
+              <li>insertInDescOrder - insert dataItem in the correct position, keeping the LinkList in descending order</li>
+          </ul>
+      </li>
+  </ul>
+
+  <p><a href="#TOP">Back to Top</a></p>
+
+  <h1 id="JEOPARDY_MAIN2">Project #2 Part 3 | Jeopardy 2 (main)</h1>
+  <h2>
+      Objectives: <a href="#OBJECTIVES2_3"
+                     onclick="showChildDiv('OBJECTIVES2_3');return true">(Show/Hide)</a>
+  </h2>
+  <div id="OBJECTIVES2_3" style="display: none;">
+      <ul>
+          <li>Design and develop large-scale programs using classes and data structures.</li>
+          <li>Write properly documented programs following a set of coding standards.</li>
+          <li>Demonstrate an understanding of object-oriented methodology in program design.</li>
+          <li>Create classes to be used as an abstract data type for a program.</li>
+          <li>Demonstrate understanding and use of the process of data abstraction/encapsulation.</li>
+          <li>
+              Process memory allocation and management of contiguous data structures in code.
+          </li>
+          <li>Construct programs to utilize class templates/generics.</li>
+          <li>Implement non-contiguous data structures in code.</li>
+
+      </ul>
+  </div>
+      <h2>Assignment Specificiations:</h2>
+      <h3 id="DOWNLOAD2">Download Data File to include in the project as the data resource file:</h3>
+      <ul>
+          <li>Download <a href="categories.csv" target="_blank">categories.csv</a></li>
+      </ul>
+
+
+      <h3>Main program Jeopardy_main2.cpp</h3>
+
+      <ol type="1">
+          <li>Setup the allCategories object of type LinkList&lt;Record&gt; - it should be empty</li>
+          <li>
+              Read from the resource file that contains the file names of all the category files
+              (<a href="#DOWNLOAD3">download above</a>) where each Record is stored as <i>categoryName.csv</i>
+              <ul>
+                  <li>LinkList&lt;T&gt;::ReadFile</li>
+              </ul>
+          </li>
+          <li>
+              Print the collection List to the console formatted in a meaningful way for the
+              user experience.
+              <ul>
+                  <li>
+                      If you completed the Bonus - then make sure you added in insertAscOrder so that when it prints it is in ascneding order.
+                  </li>
+                  <li>If you didn't complete the Bonus - then it will just print in the same order that it read from the file - appending'</li>
+              </ul>
+          </li>
+          <li>
+          <li>Setup the boardCategories object of type LinkList&lt;Record&gt; - it should be empty</li>
+          <li>
+              Randomly select a category from the allCategories object and append to boardCategories
+              <ul>
+                  <li>
+                      Select 6 random categories, but each category must be unique - Do <b>NOT</b> allow duplicates
+                      <ul>
+                          <li>If you completed the Bonus - LinkList&lt;T&gt;::removeDups()</li>
+                          <li>If you didn't complete the Bonus - then just remove out of the allCategories collection.</li>
+                      </ul>
+                  </li>
+              </ul>
+          </li>
+          <li>
+              Print the boardCategories names, <b>NOT</b> the fileNames with extensions
+              <ul>
+                  <li>
+                      When the item is returned out of the boardCategory it is a Record.  Split the Record on the
+                      <b>'.'</b>, and only print the first part of the Record (the fileName).  Use the Record::upper to
+                      convert the board names to all upper case before printing.
+                  </li>
+              </ul>
+          </li>
+      </ol>
+
+
+      <h2>How to Submit:</h2>
+      <ul>
+          <li>
+              Make sure to follow the <a href="../rubric.htm" target="_blank">Grading Rubric</a>
+              and <a href="../syllabus.htm#ACADEMIC_STANDARDS" target="_blank">Academic Standards</a>.
+          </li>
+      </ul>
+      <ul>
+          <li>Complete and Submit to replit project: Jeopardy #2                            
+              <ol type="1">
+                  <li>linkjist.h</li>
+                  <li>linkjist.template</li>
+                  <li>node.h</li>
+                  <li>node.template (optional)</li>
+                  <li>record.h</li>
+                  <li>record.cpp</li>
+                  <li>jeopardy_main2.cpp (main)</li>
+             </ol>
+          </li>
+      </ul>
+
+      <p><a href="#TOP">Back to Top</a></p>
+
+  </div>
+
+
+<div id="JEOPARDY3">
+
+  <h1 id="BINTREE">Project #3 Part 1 | BinTree </h1>
+  <h2>
+      Objectives: <a href="#OBJECTIVES3_1"
+                     onclick="showChildDiv('OBJECTIVES3_1');return true">(Show/Hide)</a>
+  </h2>
+  <div id="OBJECTIVES3_1" style="display: none;">
+      <ul>
+          <li>Follow and explain tree-based algorithms</li>
+          <li>Design and implement classes for binary tree nodes and binary trees</li>
+          <li>Explain the traversal algorithms for the common binary tree traversals (in-order, pre-order, post-order, backwards in-order)</li>
+          <li>List the rules for a binary search tere and determine whether a tree satisfies these rules</li>
+          <li>Carry out searches, insertions on a binary search tree and implement these algorithms using the binary tree class</li>
+      </ul>
+  </div>
+  <h2>Assignment Specificiations:</h2>
+  <h3>BinNode&lt;T&gt; Class Template (item in tree data structure)</h3>
+  <ol>
+      <li>
+          A BinNode has private data members of
+          <ul>
+              <li>BinNode&lt;T&gt;* left</li>
+              <li>BinNode&lt;T&gt;* right</li>
+              <li>T data (data item or element being stored)</li>
+          </ul>
+      </li>
+
+      <li>The BinNode class needs constructors (default and a constructor that will set the data)</li>
+      <li>The BinNode class is <strong>NOT</strong> dynamic</li>
+      <li>BinNode is a template class that is the helper class to BinTree as the structure of data, left and right pointers.</li>
+  </ol>
+  <h3>BinTree&lt;T&gt; Template Class (data structure container of BinNode)</h3>
+  <ol>
+      <li>
+          A BinTree is a collection data structure that is dynamic, storing BinNodes.
+          <ul>
+              <li>
+                  Only BinNode&lt;T&gt;<b>*</b> pointers will be created in BinTree - <strong>NO</strong>
+                  BinNode&lt;T&gt; objects
+              </li>
+          </ul>
+      </li>
+      <li>
+          A BinTree has private data members of
+          <ul>
+              <li>BinNode&lt;T&gt;* root</li>
+          </ul>
+      </li>
+      <li>
+          A BinTree has private member functions of
+          <ol>
+              <li>copyTree(BinNode&lt;T&gt;*) - performs preOrder traversal</li>
+              <li>countNodes(BinNode&lt;T&gt;*, int&) - performs any traversal to count and reassign int&</li>
+              <li>print(BinNode&lt;T&gt;*, int&amp;) - performs inOrder traversal</li>
+              <li>writeFile(BinNode&lt;T&gt;*, std::ofstream&amp;) - performs preOrder traversal</li>
+              <li>free(BinNode&lt;T&gt;*) - performs postOrder traversal</li>
+              <li>
+                  void inOrderRecursive(BinNode&lt;T&gt;* cursor, int&amp; count1, int&amp; count2,
+                  void process(T, int&amp;, int&amp;));
+                  <ul>
+                      <li>
+                          count1 is <b>NOT</b> incremented and remains the value passed in to the public inOrder
+                          member function
+                      </li>
+                      <li>count2 is incremented up by 1</li>
+                  </ul>
+              </li>
+          </ol>
+      </li>
+      <li>
+          BinTree is a dynamic template class that needs to ensure full value-semantics is completed
+          <ul>
+              <li>Copy Constructor - calls copyTree</li>
+              <li>Assignment Operator - calls copyTree</li>
+              <li>Destructor - calls free</li>
+          </ul>
+      </li>
+      <li>
+          Public Members:
+          <ol>
+              <li>Default Constructor (empty tree) - set root to nullptr</li>
+              <li>isEmpty - checks if root is nullptr or not</li>
+              <li>getSize() - returns the number of Nodes - which correlates to the number of data items</li>
+              <li>add(<i>T</i> dataIn)</li>
+              <li>readFile(std::string fileName)</li>
+              <li>printAll() - calls print</li>
+              <li>writeFile(std::string fileName) - calls private writeFile</li>
+              <li>
+                  void inOrderTraversal(int count1, void process(T, int&amp;, int&amp;)) {
+                  <br />	&nbsp;	&nbsp;int count2 = 1;
+                  <br />	&nbsp;	&nbsp;inOrderRecursive(root, count1, count2, process);
+                  <br />}
+                  <ul>
+                      <li>
+                          Note that the <em>BinTree::inOrderTraverse</em> and recursive <em>BinTree::inOrderTraverseRecursive</em>
+                          match the function call used in the HTMLfunc files (files below) of printHTMLpages
+                      </li>
+                  </ul>
+              </li>
+          </ol>
+      </li>
+
+
+      <li>Make sure all the member functions move links <strong>NOT</strong> data around when adding, removing.</li>
+      <li>Make sure the class is a template</li>
+  </ol>
+  <h3>Bonus BinTree</h3>
+  <ul>
+      <li>BinTree<strong>::</strong>remove(T)</li>
+      <li>Setup Friend relationship between BinTree and BinNode so that BinTree can access all private data members of BinNode directly.</li>
+  </ul>
+
+
+
+  <p><a href="#TOP">Back to Top</a></p>
+
+  <h1 id="JEOPARDY_MAIN3">Project #3 Part 2 | Jeopardy4 </h1>
+  <h2>
+      Objectives: <a href="#OBJECTIVES3_2"
+                     onclick="showChildDiv('OBJECTIVES3_2');return true">(Show/Hide)</a>
+  </h2>
+  <div id="OBJECTIVES3_2" style="display: none;">
+      <ul>
+          <li>Follow and explain tree-based algorithms</li>
+          <li>Design and implement classes for binary tree nodes and binary trees</li>
+          <li>Explain the traversal algorithms for the common binary tree traversals (in-order, pre-order, post-order, backwards in-order)</li>
+          <li>List the rules for a binary search tere and determine whether a tree satisfies these rules</li>
+          <li>Carry out searches, insertions on a binary search tree and implement these algorithms using the binary tree class</li>
+      </ul>
+  </div>
+      <h2 id="DOWNLOAD4">Download Source Files and Data Resource Files:</h2>
+      <ul>
+          <li><a href="Question.h" target="_blank">Question.h</a> and <a href="Question.cpp" target="_blank">Question.cpp</a></li>
+          <li><a href="HTMLFunc.h" target="_blank">HTMLfunc.h</a> and <a href="HTMLFunc.cpp" target="_blank">HTMLFunc.cpp</a></li>
+          <li><a href="categories.csv" target="_blank">categories.csv</a></li>
+          <li><a href="StudentJeopardyCategories.zip" target="_blank">StudentJeopardyCategories.zip</a></li>
+      </ul>
+      <h2>Assignment Specificiations:</h2>
+      <h3>Main program Jeopardy_main3.cpp</h3>
+      <p>
+          The backwards Jeopardy game simply means that instead of showing the answer as is done on the TV show,
+          the board will show the question.
+
+      </p>
+      <p>Jeopardy3 HTML GUI: <a href="./JeopardyDemo/index.htm" target="_blank">Demo</a> (link)</p>
+
+
+
+      <ol>
+          <li>Open your Jeopardy2 program and rename jeopardy_main2.cpp to jeopardy_main3.cpp</li>
+          <li>
+              The program still reads 6 randomly selected category file names into a LinkList&lt;Record&gt; from
+              <i>categories.csv</i> (<a href="#DOWNLOAD4">download above</a>)
+          </li>
+          <li>The LinkList&lt;Record&gt; boardCategories</li> is then passed to the printHTMLindex function.
+
+          <li>
+              Using the Question class (<a href="#DOWNLOAD4">download above</a>), create 6
+              BinTree&lt;Question&gt; objects
+          </li>
+          <li>
+              For each BinTree object call the readFile member function passing in the Record random file that is stored
+              in the LinkList collection.
+              <ul>
+                  <li>Extract the student category csv files and add to your project resources: StudentJeopardyCategories.zip (<a href="#DOWNLOAD4">download above</a>)</li>
+                  <li>After reading from the files, each BinTree data structure now contain a collection of Question objects.</li>
+              </ul>
+          </li>
+          <li>
+              Call the following functions before the return 0; at the end of int main()
+              <ul style="list-style-type:none;">
+                  <li>printHTMLindex - pass in the LinkList&lt;Record&gt; categories</li>
+                  <li>
+                      printHTMLpages - pass in the BinTree collection of Questions and the category counter 1-6 (call this
+                      function 6 times - once for each questionSet
+                  </li>
+                  <li>
+                      system("index.htm"); // this will open the index.htm page in the default browser to display the game - Windows machines only! Other OS users, once your program runs, open "index.htm" yourself
+                  </li>
+              </ul>
+          </li>
+
+      </ol>
+      <h3>HTML GUI app</h3>
+      <ul>
+          <li>
+              Generate HTML pages from each BinTree object:<br>
+              <ul>
+                  <li>
+                      Add the HTMLFUNC files as existing files to the project (<a href="#DOWNLOAD4">download above</a>)
+                  </li>
+                  <li>
+                      HTMLFUNC function will be calling the following - make sure you have these exact member function in
+                      your Record, LinkList and BinTree classes
+                      <ul>
+                          <li>Record Record::upper();</li>
+                          <li>Record* Record::split(char);</li>
+                          <li>
+                              std::ifstream&#38; operator&gt;&gt;(std::ifstream&#38; ifs, Record&#38; fld);
+                              <ul>
+                                  <li>Read until a newline '\n' NOT a comma ',' - calling std::getline(ifs, fld);</li>
+                              </ul>
+                          </li>
+                          <li>T LinkList::at(int i); // where i is a counting number starting at 1</li>
+                          <li>int LinkList&lt;T&gt;::getSize();</li>
+                          <li>void BinTree&lt;T&gt;::inOrderTraverse(int count1, void process(T, int&, int&)) ;</li>
+                      </ul>
+                  </li>
+                  <li>
+                      When the program completes successfully, the following HTML files will have been generated.
+                      <ul>
+                          <li>index.htm - view this file in a browser to see your game in action</li>
+                          <li>catnum_score.htm (ie. cat1_100.htm, cat1_200.htm, ..., cat6_400.htm, cat6_500.htm)</li>
+                      </ul>
+                  </li>
+
+
+              </ul>
+          </li>
+      </ul>
+      <h2>How to Submit:</h2>
+      <ul>
+          <li>
+              Make sure to follow the <a href="../rubric.htm" target="_blank">Grading Rubric</a>
+              and <a href="../syllabus.htm#ACADEMIC_STANDARDS" target="_blank">Academic Standards</a>.
+          </li>
+      </ul>
+      <ul>
+          <li>Complete and Submit to replit project: Jeopardy #3
+              <ol type="1">
+                  <li>binnode.h</li>
+                  <li>binnode.template (optional)</li>
+                  <li>bintree.h</li>
+                  <li>bintree.template</li>
+                  <li>record.h</li>
+                  <li>record.cpp</li>
+                  <li>htmlfunc.h</li>
+                  <li>htmlfunc.cpp</li>
+                  <li>linklist.h</li>
+                  <li>linklist.template</li>
+                  <li>node.h</li>
+                  <li>node.template (optional)</li>
+                  <li>question.h</li>
+                  <li>question.cpp</li>
+                  <li>jeopardy_main3.cpp (main)</li>
+              </ol>
+          </li>    
+      </ul>
+
+      <p><a href="#TOP">Back to Top</a></p>
+  </div> <!-- end project #4 div -->
+
+
+</div> <!-- end content div -->
+</div> <!-- end wrapper div -->
+
+</body>
+</html>
